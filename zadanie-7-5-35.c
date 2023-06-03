@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-int binary_search(int p[], int T[], int l, int r, int key) {
+int binary_search(float p[], int T[], int l, int r, float key) {
     while (r - l > 1) {
         int m = l + (r - l) / 2;
         if (p[T[m]] >= key) {
@@ -17,13 +17,14 @@ int binary_search(int p[], int T[], int l, int r, int key) {
 
 void printlist(int *l, int len){
     for (int i = 0; i < len; i++){
-        priltf("%d ", l[i]);
-    }  
+        printf("%.0f ", l[i]);
+    }   
+    printf("\n");
 }
 
-unsigned int najdlhsia_rastuca_podpostupnost(float *p, unsigned int l, unsigned int *v) {
-    int tail[l];
-    int prev[l];
+unsigned int* najdlhsia_rastuca_podpostupnost(float *p, int l, unsigned int *v) {
+    unsigned int tail[l];
+    unsigned int prev[l];
     tail[0] = 0;
     prev[0] = -1;
     for (int i = 1; i < l; i++) {
@@ -45,17 +46,18 @@ unsigned int najdlhsia_rastuca_podpostupnost(float *p, unsigned int l, unsigned 
             tail[pos] = i;
         }
     }
-    for (int i = tail[len - 1]; i != -1; i = prev[i]) {
-        v[i] = i;
-        printf("%d ", p[i]);
+    unsigned int *z = malloc(len * sizeof(unsigned int));
+    printlist(z, len);
+    for (unsigned int i = tail[len - 1]; i != -1; i = prev[i]) {
+        z[i] = i;
+        printf("pi = %.0f zi= %.0f\n", p[i], z[i]);
     }
-    return *v;
+    printlist(z, len);
+    return z;
 }
 
 int main() {
-    int p[] = { 2, 5, 3, 7, 11, 8, 10, 13, 6 };
-    unsigned l = sizeof(p) / sizeof(p[0]);
-    unsigned v[] = malloc(l * sizeof(int));
-    int d = najdlhsia_rastuca_podpostupnost(p, l, v);
-    printlist(d,l);
+    float p[] = { 2, 5, 3, 7, 11, 8, 10, 13, 6 };
+    int l = sizeof(p) / sizeof(p[0]);
+    unsigned int *v = najdlhsia_rastuca_podpostupnost(p, l, v);
 }
