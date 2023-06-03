@@ -15,14 +15,21 @@ int binary_search(float p[], int T[], int l, int r, float key) {
     return r;
 }
 
-void printlist(int *l, int len){
+void printlist(unsigned int *l, int len){
     for (int i = 0; i < len; i++){
-        printf("%.0f ", l[i]);
+        printf("%i ", l[i]);
     }   
     printf("\n");
 }
-
-unsigned int* najdlhsia_rastuca_podpostupnost(float *p, int l, unsigned int *v) {
+void reversearray(unsigned int *l, int n){
+    unsigned int temp;
+    for (int i=0; i<n/2; i++){
+        temp = l[i];
+        l[i] = l[n-i-1];
+        l[n-i-1] = temp;
+    }    
+}
+unsigned int * najdlhsia_rastuca_podpostupnost(float *p, int l) {
     unsigned int tail[l];
     unsigned int prev[l];
     tail[0] = 0;
@@ -47,11 +54,12 @@ unsigned int* najdlhsia_rastuca_podpostupnost(float *p, int l, unsigned int *v) 
         }
     }
     unsigned int *z = malloc(len * sizeof(unsigned int));
-    printlist(z, len);
+    int j = 0;
     for (unsigned int i = tail[len - 1]; i != -1; i = prev[i]) {
-        z[i] = i;
-        printf("pi = %.0f zi= %.0f\n", p[i], z[i]);
+        z[j] = i;
+        j++;
     }
+    reversearray(z, len);
     printlist(z, len);
     return z;
 }
@@ -59,5 +67,6 @@ unsigned int* najdlhsia_rastuca_podpostupnost(float *p, int l, unsigned int *v) 
 int main() {
     float p[] = { 2, 5, 3, 7, 11, 8, 10, 13, 6 };
     int l = sizeof(p) / sizeof(p[0]);
-    unsigned int *v = najdlhsia_rastuca_podpostupnost(p, l, v);
+    unsigned int *v = najdlhsia_rastuca_podpostupnost(p, l);
+    printf("%i ", *v);
 }
